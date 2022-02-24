@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+
+import argparse
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subparser', help="Create systemd units with love")
+
+    create = subparsers.add_parser("create", help="Create a new systemd unit")
+    create.add_argument("--description", help="Describe the systemd unit", type=str)
+
+    args = parser.parse_args()
+
+    if args.subparser == 'create':
+        print(args.description)
+    else:
+        parser.print_help()
+
+
+if __name__ == '__main__':
+    main()
