@@ -2,6 +2,8 @@
 
 import argparse
 
+from unit.unit import Unit
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -11,9 +13,10 @@ def main():
     create.add_argument("--description", help="Describe the systemd unit", type=str)
 
     args = parser.parse_args()
+    unit = Unit()
 
     if args.subparser == 'create':
-        print(args.description)
+        print(unit.construct("Testing 123", "ls -la"))
     else:
         parser.print_help()
 
