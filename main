@@ -10,13 +10,18 @@ def main():
     subparsers = parser.add_subparsers(dest='subparser', help="Create systemd units with love")
 
     create = subparsers.add_parser("create", help="Create a new systemd unit")
-    create.add_argument("--description", help="Describe the systemd unit", type=str)
+    create.add_argument("description", help="Describe the systemd unit", type=str)
+    create.add_argument("-t", "--type", help="Service type",
+                        choices=['simple', 'oneshot', 'forking', 'dbus', 'notify', 'idle'], type=str)
+
+    create.add_argument("command", help="Command to execute", type=str)
 
     args = parser.parse_args()
     unit = Unit()
 
     if args.subparser == 'create':
-        print(unit.construct("Testing 123", "ls -la"))
+        print(unit.construct(args.description, args.command))
+
     else:
         parser.print_help()
 

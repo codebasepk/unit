@@ -12,7 +12,7 @@ Description={description}
     def _construct_service_section(self, command):
         section = f"""
 [Service]
-ExecStart='{command}'
+ExecStart={command}
         """
 
         return section
