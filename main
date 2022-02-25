@@ -20,11 +20,7 @@ def main():
     unit = Unit()
 
     if args.subparser == 'create':
-        if args.type:
-            print(unit.construct(args.description, args.command, args.type))
-        else:
-            print(unit.construct(args.description, args.command, args.type))
-
+        print(unit.construct(args.description, args.command, args.type))
 
     else:
         parser.print_help()
