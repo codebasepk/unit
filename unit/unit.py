@@ -13,7 +13,7 @@ Description={description}
         section = f"""
 [Service]
 Type={type}
-ExecStart={command}
+ExecStart='{command}'
         """
 
         return section
