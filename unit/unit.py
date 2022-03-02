@@ -15,6 +15,8 @@ Before='{before}'"""
         return section
 
     def _construct_service_section(self, command, type, restart, user, stop, group, directory, bus_name, remain, notify):
+        if not type:
+            type = 'simple'
         section = f"""
 [Service]
 Type={type}
@@ -64,7 +66,7 @@ WantedBy={wanted_by}
 
         return section
 
-    def construct(self, description, command, type='simple', restart=None, user=None, stop=None, after=None,
+    def construct(self, description, command, type, restart=None, user=None, stop=None, after=None,
                   before=None, group=None, directory=None, bus_name=None, remain_status=None, notify=None):
         unit_section = self._construct_unit_section(description, after, before)
         service_section = self._construct_service_section(command, type, restart, user, stop, group, directory,
