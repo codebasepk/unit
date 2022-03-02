@@ -11,8 +11,21 @@ def main():
 
     create = subparsers.add_parser("create", help="Create a new systemd unit")
     create.add_argument("description", help="Describe the systemd unit", type=str)
+    create.add_argument("-a", "--after", help="After unit service", type=str)
+    create.add_argument("-b", "--before", help="Before unit service", type=str)
+
     create.add_argument("-t", "--type", help="Service type",
                         choices=['simple', 'oneshot', 'forking', 'dbus', 'notify', 'idle'], type=str)
+    create.add_argument("-r", "--restart", help="Restart",
+                        choices=['no', 'always', 'on-success', 'on-failure', 'on-abnormal', 'on-abort', 'on-watchdog'],
+                        type=str)
+    create.add_argument("-u", "--user", help="User", type=str)
+    create.add_argument("-g", "--group", help="Group", type=str)
+    create.add_argument("-s", "--stop", help="Stop command", type=str)
+    create.add_argument("-w", "--directory", help="Working Directory", type=str)
+    create.add_argument("-m", "--bus", help="Bus Name", type=str)
+    create.add_argument("-x", "--remain", help="Remain after exit", choices=['yes', 'no'], type=str)
+    create.add_argument("-n", "--notify", help="Notify Access", choices=['none', 'main', 'exec', 'all'], type=str)
 
     create.add_argument("command", help="Command to execute", type=str)
 
@@ -20,7 +33,10 @@ def main():
     unit = Unit()
 
     if args.subparser == 'create':
-        print(unit.construct(args.description, args.command, args.type))
+        if args.type == 'dbus' and not args.bus:
+            parser.error('BusName necessary with service type bus')
+        print(unit.construct(args.description, args.command, args.type, args.restart, args.user, args.stop, args.after,
+                             args.before, args.group, args.directory, args.bus, args.remain, args.notify))
 
     else:
         parser.print_help()
