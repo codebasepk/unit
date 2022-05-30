@@ -1,0 +1,17 @@
+name: unit
+base: core20
+version: '0.1'
+summary: Create Systemd unit files with love
+description: unit is a command-line tool. Its goal is to ease the creation of systemd files.
+
+grade: devel
+confinement: strict
+
+parts:
+  unit:
+    plugin: python
+    source: .
+
+apps:
+  unit:
+    command: bin/main
